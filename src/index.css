@@ -1,7 +1,6 @@
 .table > :not(:first-child) {
   border-top: none;
 }
-
 .bt-5px {
   border-top-width: 5px;
 }
@@ -9,11 +8,4 @@
   content: "*";
   color: red;
   margin-left: 5px;
-}
-html,
-body {
-  height: 100%;
-}
-#root {
-  height: 100%;
 }
