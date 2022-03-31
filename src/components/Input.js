@@ -19,6 +19,7 @@ const Input = (props) => {
         ) : (
           <input
             className="form-control"
+            autoComplete="off"
             ref={inputRef}
             id={id}
             label={label}

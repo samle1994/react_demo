@@ -10,11 +10,12 @@ const Login = (props) => {
     const username = usernameRef.current.value;
     const password = passwordRef.current.value;
     if (username === "admin" && password === "123456") {
-      setmessage("good");
+      setmessage("good !");
     } else {
       setmessage("bad");
     }
   };
+
   useEffect(() => {
     usernameRef.current.focus();
   }, []);
