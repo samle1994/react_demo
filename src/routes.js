@@ -27,8 +27,6 @@ const routes = [
   {
     path: "*",
     component: <NotFound />,
-
-    NavLink,
   },
 ];
 export default routes;
