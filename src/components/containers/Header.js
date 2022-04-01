@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-
 const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
