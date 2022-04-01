@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-const Major = () => {
-  const navigate = useNavigate();
 
-  const Add = () => {
-    navigate("/major/0");
-  };
-
+const Student = () => {
   return (
     <>
       <div className="container mt-4">
@@ -32,20 +26,30 @@ const Major = () => {
           </div>
           <div className="card-body">
             <div className="table-responsive">
-              <table className="table table-bordered border-primary table-hover table-striped">
+              <table className="text-center table table-bordered border-primary table-hover table-striped">
                 <thead>
                   <tr className="table-primary border-primary">
                     <th style={{ width: "50px" }}>#</th>
-                    <th>Major Name</th>
+                    <th>Student Id</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Phone</th>
+                    <th>Email</th>
                     <th style={{ width: "80px" }}></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>IT</td>
+                    <td>01-02-987</td>
+                    <td>Lê Sâm</td>
                     <td>
-                      <a onClick={Add}>
+                      <i className="bi bi-gender-female"></i>
+                    </td>
+                    <td>0356784402</td>
+                    <td>lesamcntta@gmail.com</td>
+                    <td>
+                      <a href="/">
                         <i className="bi-pencil-square text-primary"></i>
                       </a>
                       <a href="/">
@@ -55,7 +59,13 @@ const Major = () => {
                   </tr>
                   <tr>
                     <td>2</td>
-                    <td>Marketing</td>
+                    <td>01-02-987</td>
+                    <td>Lê Sâm</td>
+                    <td>
+                      <i className="bi bi-gender-female"></i>
+                    </td>
+                    <td>0356784402</td>
+                    <td>lesamcntta@gmail.com</td>
                     <td>
                       <a href="/">
                         <i className="bi-pencil-square text-primary"></i>
@@ -67,7 +77,13 @@ const Major = () => {
                   </tr>
                   <tr>
                     <td>3</td>
-                    <td>Network</td>
+                    <td>01-02-987</td>
+                    <td>Lê Sâm</td>
+                    <td>
+                      <i className="bi bi-gender-female"></i>
+                    </td>
+                    <td>0356784402</td>
+                    <td>lesamcntta@gmail.com</td>
                     <td>
                       <a href="/">
                         <i className="bi-pencil-square text-primary"></i>
@@ -79,7 +95,13 @@ const Major = () => {
                   </tr>
                   <tr>
                     <td>4</td>
-                    <td>Accounting</td>
+                    <td>01-02-987</td>
+                    <td>Lê Sâm</td>
+                    <td>
+                      <i className="bi bi-gender-female"></i>
+                    </td>
+                    <td>0356784402</td>
+                    <td>lesamcntta@gmail.com</td>
                     <td>
                       <a href="/">
                         <i className="bi-pencil-square text-primary"></i>
@@ -106,7 +128,7 @@ const Major = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                New Major
+                New Student
               </h5>
               <button
                 type="button"
@@ -119,7 +141,7 @@ const Major = () => {
               <form>
                 <div className="form-group row">
                   <label htmlFor="txtMajor" className="col-sm-3 col-form-label">
-                    Major name
+                    Student name
                   </label>
                   <div className="col-sm-9">
                     <input type="text" className="form-control" id="txtMajor" />
@@ -146,4 +168,4 @@ const Major = () => {
   );
 };
 
-export default Major;
+export default Student;
