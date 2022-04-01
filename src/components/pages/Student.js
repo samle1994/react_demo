@@ -9,7 +9,7 @@ const Student = () => {
             <div className="row">
               <div className="col">
                 <h3 className="card-title">
-                  Major <small className="text-muted">list</small>
+                  Student <small className="text-muted">list</small>
                 </h3>
               </div>
               <div className="col-auto">
