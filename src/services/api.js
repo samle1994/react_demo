@@ -1,10 +1,11 @@
 import axios from "axios";
 const url= {
-    baseUrl:'restfulapi.dnd-group.net/api',
-    url:'/login'
+    baseUrl:'https://restfulapi.dnd-group.net/api',
+    login:'/login',
+    major:'/major',
 }
 const instance=axios.create({
-    baseUrl:url.baseUrl,
+    baseURL:url.baseUrl,
     headers: {
         "Content-Type":"application/json",
         Accept:"application/json"
