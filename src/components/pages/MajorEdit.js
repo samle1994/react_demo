@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const MajorEdit = () => {
-  const [id, setid] = useState("0");
+  const [major, setmajors] = useState({ id: 0, name: "" });
+  const param = useParams();
 
-  useEffect(function () {
-    const lastindex = window.location.href.lastIndexOf("/");
-    setid(window.location.href.substring(lastindex + 1));
-  }, []);
+  useEffect(
+    function () {
+      setmajors({ ...major, id: Number(param.id).valueOf() });
+    },
+    [param.id]
+  );
 
   const navigate = useNavigate();
 
-  const Back = () => {
+  const handleBack = () => {
     navigate("/major");
   };
-
+  const handleSave = () => {
+    navigate("/major");
+  };
   return (
     <>
       <div className="row justify-content-center mt-5">
@@ -23,7 +28,7 @@ const MajorEdit = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                  {id == 0 ? "News" : "Edit"} Major
+                  {major.id === 0 ? "News" : "Edit"} Major
                 </h5>
               </div>
               <div className="modal-body">
@@ -50,11 +55,15 @@ const MajorEdit = () => {
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
-                  onClick={Back}
+                  onClick={handleBack}
                 >
                   Back
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button
+                  onClick={handleSave}
+                  type="button"
+                  className="btn btn-primary"
+                >
                   Save
                 </button>
               </div>

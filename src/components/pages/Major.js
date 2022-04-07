@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import majorService from "./../../services/majorService";
 const Major = () => {
   const navigate = useNavigate();
 
-  const Add = () => {
-    navigate("/major/0");
+  const [majors, setmajors] = useState([]);
+
+  const loadData = () => {
+    majorService.list().then((res) => setmajors(res.data));
   };
+
+  const showEditPage = (e, id) => {
+    e.preventDefault();
+    return navigate(`/major/${id}`);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   return (
     <>
@@ -41,54 +53,20 @@ const Major = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>IT</td>
-                    <td>
-                      <a onClick={Add}>
-                        <i className="bi-pencil-square text-primary"></i>
-                      </a>
-                      <a href="/">
-                        <i className="bi-trash text-danger"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Marketing</td>
-                    <td>
-                      <a href="/">
-                        <i className="bi-pencil-square text-primary"></i>
-                      </a>
-                      <a href="/">
-                        <i className="bi-trash text-danger"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Network</td>
-                    <td>
-                      <a href="/">
-                        <i className="bi-pencil-square text-primary"></i>
-                      </a>
-                      <a href="/">
-                        <i className="bi-trash text-danger"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Accounting</td>
-                    <td>
-                      <a href="/">
-                        <i className="bi-pencil-square text-primary"></i>
-                      </a>
-                      <a href="/">
-                        <i className="bi-trash text-danger"></i>
-                      </a>
-                    </td>
-                  </tr>
+                  {majors.map((major, idx) => (
+                    <tr key={major.id}>
+                      <td>{idx + 1}</td>
+                      <td>{major.name}</td>
+                      <td>
+                        <a href="/" onClick={(e) => showEditPage(e, major.id)}>
+                          <i className="bi-pencil-square text-primary"></i>
+                        </a>
+                        <a href="/">
+                          <i className="bi-trash text-danger"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
