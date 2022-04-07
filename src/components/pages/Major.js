@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import majorService from "./../../services/majorService";
 import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
+import Input from "./../Input";
 function Major() {
   const navigate = useNavigate();
 
@@ -39,30 +40,52 @@ function Major() {
       }
     });
   };
-  const [major, setmajor] = useState({ id: 0, name: "" });
+  //const [major, setmajor] = useState({ id: 0, name: "" });
 
-  const handelChange = (e) => {
-    const newData = { ...major };
-    newData[e.target.name] = e.target.value;
-    setmajor(newData);
-  };
+  // const handelChange = (e) => {
+  //   const newData = { ...major };
+  //   newData[e.target.name] = e.target.value;
+  //   setmajor(newData);
+  // };
 
-  const showModalHandler = (e, id) => {
-    if (e) e.preventDefault();
-    if (id > 0) {
-      majorService.get(id).then((res) => {
-        setmajor(res.data);
-        handleShow();
-      });
-    } else {
-      setmajor({ id: 0, name: "" });
-      handleShow();
-    }
-  };
+  // const handelSave = () => {
+  //   if (major.id === 0) {
+  //     majorService.add(major).then((res) => {
+  //       if (res.errorCode === 0) {
+  //         loadData();
+  //         handleClose();
+  //         toast.success("Thêm mới thành công");
+  //       }
+  //     });
+  //   } else {
+  //     majorService.update(major.id, major).then((res) => {
+  //       if (res.errorCode === 0) {
+  //         loadData();
+  //         handleClose();
+  //         toast.success("Cập nhật thành công");
+  //       }
+  //     });
+  //   }
+  // };
 
-  const handelSave = () => {
-    if (major.id === 0) {
-      majorService.add(major).then((res) => {
+  const formik = useFormik({
+    initialValues: {
+      id: 0,
+      name: "",
+    },
+    validationSchema: Yup.object({
+      id: Yup.number().required(),
+      name: Yup.string().min(5, "Nhập tối thiểu 5 ký tự").required("Required"),
+    }),
+    onSubmit: (values) => {
+      handleFormSubmit(values);
+    },
+  });
+
+  const handleFormSubmit = (data) => {
+    console.log(data);
+    if (data.id === 0) {
+      majorService.add(data).then((res) => {
         if (res.errorCode === 0) {
           loadData();
           handleClose();
@@ -70,7 +93,7 @@ function Major() {
         }
       });
     } else {
-      majorService.update(major.id, major).then((res) => {
+      majorService.update(data.id, data).then((res) => {
         if (res.errorCode === 0) {
           loadData();
           handleClose();
@@ -79,26 +102,18 @@ function Major() {
       });
     }
   };
-
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-    },
-    validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Required"),
-      lastName: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
-    }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  const showModalHandler = (e, id) => {
+    if (e) e.preventDefault();
+    if (id > 0) {
+      majorService.get(id).then((res) => {
+        formik.setValues(res.data);
+        handleShow();
+      });
+    } else {
+      formik.resetForm();
+      handleShow();
+    }
+  };
 
   return (
     <>
@@ -109,23 +124,29 @@ function Major() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{major.id === 0 ? "News" : "Edit"} Major</Modal.Title>
+          <Modal.Title>
+            {formik.values.id === 0 ? "News" : "Edit"} Major
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input
-            type="text"
-            className="form-control"
-            name="name"
-            onChange={(e) => handelChange(e)}
-            defaultValue={major.name}
+          <Input
             id="txtMajor"
+            label="Major Name"
+            type="text"
+            frmField={formik.getFieldProps("name")}
+            err={formik.touched.name && formik.errors.name}
+            errMessage={formik.errors.name}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handelSave}>
+          <Button
+            variant="primary"
+            disabled={!formik.dirty || !formik.isValid}
+            onClick={formik.handleSubmit}
+          >
             Save
           </Button>
         </Modal.Footer>
