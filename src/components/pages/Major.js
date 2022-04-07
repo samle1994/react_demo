@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import majorService from "./../../services/majorService";
-const Major = () => {
+import { Button, Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { Formik } from "formik";
+import * as Yup from "yup";
+function Major() {
   const navigate = useNavigate();
 
   const [majors, setmajors] = useState([]);
@@ -10,17 +14,103 @@ const Major = () => {
     majorService.list().then((res) => setmajors(res.data));
   };
 
-  const showEditPage = (e, id) => {
-    e.preventDefault();
-    return navigate(`/major/${id}`);
-  };
-
+  // const showEditPage = (e, id) => {
+  //   e.preventDefault();
+  //   return navigate(`/major/${id}`);
+  // };
   useEffect(() => {
     loadData();
   }, []);
 
+  const [show, setshowModal] = useState(false);
+
+  const handleShow = () => setshowModal(true);
+  const handleClose = () => setshowModal(false);
+
+  const handelDelete = (e, id) => {
+    e.preventDefault();
+    console.log(id);
+    majorService.remove(id).then((res) => {
+      if (res.errorCode === 0) {
+        loadData();
+        toast.success("Xoá thành công");
+      } else {
+        toast.success("Xoá thất bại");
+      }
+    });
+  };
+  const [major, setmajor] = useState({ id: 0, name: "" });
+
+  const handelChange = (e) => {
+    const newData = { ...major };
+    newData[e.target.name] = e.target.value;
+    setmajor(newData);
+  };
+
+  const showModalHandler = (e, id) => {
+    if (e) e.preventDefault();
+    if (id > 0) {
+      majorService.get(id).then((res) => {
+        setmajor(res.data);
+        handleShow();
+      });
+    } else {
+      setmajor({ id: 0, name: "" });
+      handleShow();
+    }
+  };
+
+  const handelSave = () => {
+    if (major.id === 0) {
+      majorService.add(major).then((res) => {
+        if (res.errorCode === 0) {
+          loadData();
+          handleClose();
+          toast.success("Thêm mới thành công");
+        }
+      });
+    } else {
+      majorService.update(major.id, major).then((res) => {
+        if (res.errorCode === 0) {
+          loadData();
+          handleClose();
+          toast.success("Cập nhật thành công");
+        }
+      });
+    }
+  };
+
   return (
     <>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{major.id === 0 ? "News" : "Edit"} Major</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            className="form-control"
+            name="name"
+            onChange={(e) => handelChange(e)}
+            defaultValue={major.name}
+            id="txtMajor"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handelSave}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div className="container mt-4">
         <div className="card border-primary bt-5">
           <div className="card-header">
@@ -34,8 +124,8 @@ const Major = () => {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editModal"
+                  variant="primary"
+                  onClick={(e) => showModalHandler(e, 0)}
                 >
                   <i className="bi-plus-lg"></i> Add
                 </button>
@@ -58,10 +148,13 @@ const Major = () => {
                       <td>{idx + 1}</td>
                       <td>{major.name}</td>
                       <td>
-                        <a href="/" onClick={(e) => showEditPage(e, major.id)}>
+                        <a
+                          href="/"
+                          onClick={(e) => showModalHandler(e, major.id)}
+                        >
                           <i className="bi-pencil-square text-primary"></i>
                         </a>
-                        <a href="/">
+                        <a href="/" onClick={(e) => handelDelete(e, major.id)}>
                           <i className="bi-trash text-danger"></i>
                         </a>
                       </td>
@@ -122,6 +215,6 @@ const Major = () => {
       </div>
     </>
   );
-};
+}
 
 export default Major;

@@ -11,6 +11,28 @@ const instance = axios.create({
     Accept: "application/json",
   },
 });
+instance.interceptors.request.use((request) => request);
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (!error.response) {
+      window.location.href = "/no-internet";
+    } else {
+      switch (error.response.status) {
+        case 401:
+          window.location.href = "/login";
+          break;
+        case 403:
+          window.location.href = "/no-permission";
+          break;
+        default:
+          break;
+      }
+      return Promise.reject(error);
+    }
+  }
+);
+
 const api = {
   url: url,
   instance: instance,

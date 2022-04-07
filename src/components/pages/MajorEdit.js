@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import majorService from "./../../services/majorService";
+import { Button, Modal } from "react-bootstrap";
 
 const MajorEdit = () => {
   const [major, setmajors] = useState({ id: 0, name: "" });
@@ -11,14 +13,41 @@ const MajorEdit = () => {
     },
     [param.id]
   );
+  const [message, setmessage] = useState();
 
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate("/major");
   };
-  const handleSave = () => {
-    navigate("/major");
+  const handelChange = (e) => {
+    const newData = { ...major };
+    newData[e.target.name] = e.target.value;
+    setmajors(newData);
+  };
+
+  useEffect(() => {
+    if (param.id > 0) {
+      majorService.get(param.id).then((res) => {
+        setmajors(res.data);
+      });
+    }
+  }, [param.id]);
+
+  const handelSave = () => {
+    if (major.id === 0) {
+      majorService.add(major).then((res) => {
+        //console.log(res);
+        if (res.errorCode === 0) navigate("/major");
+        else setmessage(res.message);
+      });
+    } else {
+      majorService.update(major.id, major).then((res) => {
+        //console.log(res);
+        if (res.errorCode === 0) navigate("/major");
+        else setmessage(res.message);
+      });
+    }
   };
   return (
     <>
@@ -32,6 +61,7 @@ const MajorEdit = () => {
                 </h5>
               </div>
               <div className="modal-body">
+                <p className="text-danger text-center">{message}</p>
                 <form>
                   <div className="form-group row">
                     <label
@@ -43,7 +73,10 @@ const MajorEdit = () => {
                     <div className="col-sm-9">
                       <input
                         type="text"
+                        onChange={(e) => handelChange(e)}
                         className="form-control"
+                        name="name"
+                        defaultValue={major.name}
                         id="txtMajor"
                       />
                     </div>
@@ -60,7 +93,7 @@ const MajorEdit = () => {
                   Back
                 </button>
                 <button
-                  onClick={handleSave}
+                  onClick={handelSave}
                   type="button"
                   className="btn btn-primary"
                 >
