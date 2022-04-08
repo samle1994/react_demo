@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import instructorService from "./../../services/instructorService";
 import Input from "./../Input";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { useFormik, Field, Form } from "formik";
+import { useFormik, Field } from "formik";
 import * as Yup from "yup";
 const Instructor = () => {
   const [instructors, setinstructors] = useState([]);
@@ -134,36 +134,57 @@ const Instructor = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Input
-              id="txtMajor"
-              label="Intructor ID"
-              type="text"
-              required
-              frmField={formik.getFieldProps("name")}
-              err={formik.touched.name && formik.errors.name}
-              errMessage={formik.errors.name}
-            />
-            <Input
-              id="phone"
-              label="Phone"
-              type="text"
-              required
-              placeholder="Phone number"
-              frmField={formik.getFieldProps("phone")}
-              err={formik.touched.phone && formik.errors.phone}
-              errMessage={formik.errors.phone}
-            />
-            <Input
-              id="phone"
-              label="Phone"
-              type="text"
-              placeholder="Email address"
-              frmField={formik.getFieldProps("email")}
-              err={formik.touched.email && formik.errors.email}
-              errMessage={formik.errors.email}
-            />
-          </Form>
+          <Input
+            id="txtMajor"
+            label="Intructor ID"
+            type="text"
+            required
+            frmField={formik.getFieldProps("name")}
+            err={formik.touched.name && formik.errors.name}
+            errMessage={formik.errors.name}
+          />
+          <div className="row mb-3 d-flex align-items-center">
+            <label className="col-sm-3 col-form-label">
+              Gender <span className="text-danger">*</span>
+            </label>
+            {["radio"].map((type) => (
+              <div key={`inline-${type}`} className="col-sm">
+                <Form.Check
+                  inline
+                  label="Male"
+                  name="gender"
+                  type={type}
+                  id="male"
+                />
+                <Form.Check
+                  inline
+                  name="gender"
+                  label="Female"
+                  type={type}
+                  id="female"
+                />
+              </div>
+            ))}
+          </div>
+          <Input
+            id="phone"
+            label="Phone"
+            type="text"
+            required
+            placeholder="Phone number"
+            frmField={formik.getFieldProps("phone")}
+            err={formik.touched.phone && formik.errors.phone}
+            errMessage={formik.errors.phone}
+          />
+          <Input
+            id="phone"
+            label="Phone"
+            type="text"
+            placeholder="Email address"
+            frmField={formik.getFieldProps("email")}
+            err={formik.touched.email && formik.errors.email}
+            errMessage={formik.errors.email}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
