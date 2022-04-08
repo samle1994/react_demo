@@ -3,14 +3,14 @@ import instructorService from "./../../services/instructorService";
 import Input from "./../Input";
 import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { useFormik } from "formik";
+import { useFormik, Field, Form } from "formik";
 import * as Yup from "yup";
 const Instructor = () => {
   const [instructors, setinstructors] = useState([]);
 
   const loadData = () => {
     instructorService.list().then((res) => {
-      //console.log(res.data);
+      console.log(res.data);
       setinstructors(res.data);
     });
   };
@@ -73,8 +73,7 @@ const Instructor = () => {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editModal"
+                  onClick={handleShow}
                 >
                   <i className="bi-plus-lg"></i> Add
                 </button>
@@ -97,7 +96,7 @@ const Instructor = () => {
                 </thead>
                 <tbody>
                   {instructors.map((instructor, idx) => (
-                    <tr>
+                    <tr key={instructor.id}>
                       <td>{idx + 1}</td>
                       <td>{instructor.code}</td>
                       <td>{`${instructor.firstName} ${instructor.lastName}`}</td>
@@ -122,55 +121,63 @@ const Instructor = () => {
           </div>
         </div>
       </div>
-      <div
-        className="modal fade"
-        id="editModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
       >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                New Student
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="form-group row">
-                  <Input
-                    id="txtMajor"
-                    label="Major Name"
-                    type="text"
-                    frmField={formik.getFieldProps("name")}
-                    err={formik.touched.name && formik.errors.name}
-                    errMessage={formik.errors.name}
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {formik.values.id === 0 ? "News" : "Edit"} Major
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Input
+              id="txtMajor"
+              label="Intructor ID"
+              type="text"
+              required
+              frmField={formik.getFieldProps("name")}
+              err={formik.touched.name && formik.errors.name}
+              errMessage={formik.errors.name}
+            />
+            <Input
+              id="phone"
+              label="Phone"
+              type="text"
+              required
+              placeholder="Phone number"
+              frmField={formik.getFieldProps("phone")}
+              err={formik.touched.phone && formik.errors.phone}
+              errMessage={formik.errors.phone}
+            />
+            <Input
+              id="phone"
+              label="Phone"
+              type="text"
+              placeholder="Email address"
+              frmField={formik.getFieldProps("email")}
+              err={formik.touched.email && formik.errors.email}
+              errMessage={formik.errors.email}
+            />
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            disabled={!formik.dirty || !formik.isValid}
+            onClick={formik.handleSubmit}
+          >
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

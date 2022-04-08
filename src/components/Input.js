@@ -6,6 +6,7 @@ const Input = (props) => {
     id,
     label,
     labelSize,
+    required,
     frmField,
     err,
     errMessage,
@@ -13,10 +14,11 @@ const Input = (props) => {
   } = props;
   const classSize = `col-sm-${labelSize ? labelSize : 3} col-form-label`;
   const classInput = `form-control ${err ? "is-invalid" : ""}`;
+  const htmlrequired = `${required ? "*" : ""}`;
   return (
     <div className="row mb-3">
       <label htmlFor={id} className={classSize}>
-        {label}
+        {label} <span className="text-danger">{htmlrequired}</span>
       </label>
       <div className="col-sm">
         {others["rows"] ? (
