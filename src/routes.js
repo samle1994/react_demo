@@ -5,6 +5,7 @@ import MajorEdit from "./components/pages/MajorEdit";
 import Student from "./components/pages/Student";
 import Nointernet from "./components/pages/Nointernet";
 import Nopermission from "./components/pages/Nopermission";
+import Instructors from "./components/pages/Instructors";
 const routes = [
   {
     path: "",
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "student",
     component: <Student />,
+  },
+  {
+    path: "instructors",
+    component: <Instructors />,
   },
   {
     path: "no-internet",

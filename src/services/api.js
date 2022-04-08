@@ -3,6 +3,7 @@ const url = {
   baseUrl: "https://restfulapi.dnd-group.net/api",
   login: "/login",
   majors: "/majors",
+  instructors: "/instructors",
 };
 const instance = axios.create({
   baseURL: url.baseUrl,
