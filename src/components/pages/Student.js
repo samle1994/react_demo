@@ -45,7 +45,7 @@ const Instructor = () => {
         .min(6, "Nhập tối thiểu 6 số")
         .required("Bắt buộc nhập"),
       email: Yup.string().email("Định dạng email"),
-      majorId: Yup.number().required("Bắt buộc nhập"),
+      majorId: Yup.number().typeError("Select major").required("Bắt buộc nhập"),
     }),
     onSubmit: (values) => {
       handleFormSubmit(values);
@@ -136,7 +136,6 @@ const Instructor = () => {
   };
   const handleChangeSelect = (e) => {
     formik.setFieldValue("majorId", Number(e.target.value).valueOf());
-    //console.log(e.target.value);
   };
   return (
     <>
@@ -324,14 +323,22 @@ const Instructor = () => {
                   id="majorId"
                   aria-label="Select Major"
                   onChange={handleChangeSelect}
+                  className={formik.errors.majorId ? "is-invalid" : ""}
                 >
-                  <option value="">Select Major</option>
+                  <option key="0">Select Major</option>
                   {majors.map((major, index) => (
                     <option key={major.id} value={major.id}>
                       {major.name}
                     </option>
                   ))}
                 </Form.Select>
+                {formik.errors.majorId ? (
+                  <div className="invalid-feedback">
+                    {formik.errors.majorId}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </form>
