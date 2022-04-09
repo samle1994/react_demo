@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Input from "./Input";
 import userService from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import ActionTypes from "./../store/actions";
 
 //sfc
 const Login = (props) => {
@@ -10,16 +12,29 @@ const Login = (props) => {
   const [message, setmessage] = useState("");
   const usernameRef = React.useRef();
   const passwordRef = React.useRef();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const handleLoginAction = (token, userinfo) => {
+    dispatch({
+      type: ActionTypes.LOGIN_USER,
+      token: token,
+      currentUser: userinfo,
+    });
+  };
+
   const formsubmit = (e) => {
     e.preventDefault();
     const username = usernameRef.current.value;
     const password = passwordRef.current.value;
-    
-    userService.login(username,password).then((result)=>{
+
+    userService.login(username, password).then((result) => {
       //console.log(res.data.errorCode);
-      if (result.data.errorCode===0) {
-        navigate('/');
+      if (result.data.errorCode === 0) {
+        //console.log(result.data.data.accessToken);
+        handleLoginAction(result.data.data.accessToken, result.data);
+        navigate("/");
       } else {
         setmessage(result.data.message);
       }

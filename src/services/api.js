@@ -1,9 +1,11 @@
 import axios from "axios";
+import store from "../store/store";
 const url = {
   baseUrl: "https://restfulapi.dnd-group.net/api",
   login: "/login",
   majors: "/majors",
   instructors: "/instructors",
+  student: "/students",
 };
 const instance = axios.create({
   baseURL: url.baseUrl,
@@ -12,7 +14,13 @@ const instance = axios.create({
     Accept: "application/json",
   },
 });
-instance.interceptors.request.use((request) => request);
+instance.interceptors.request.use((request) => {
+  const state = store.getState();
+  if (state.auth.token) {
+    request.headers.Authorization = `Bearer ${state.auth.token}`;
+  }
+  return request;
+});
 instance.interceptors.response.use(
   (response) => response,
   (error) => {

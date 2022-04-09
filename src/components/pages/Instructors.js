@@ -24,7 +24,7 @@ const Instructor = () => {
     initialValues: {
       id: 0,
       code: "",
-      gender: 1,
+      gender: 0,
       firstName: "",
       lastName: "",
       phone: "",
@@ -64,6 +64,7 @@ const Instructor = () => {
   const handledeleteClose = () => setshowdeleteModal(false);
 
   const handleFormSubmit = (data) => {
+    //console.log(data);
     if (data.id === 0) {
       instructorService.add(data).then((res) => {
         console.log(res);
@@ -112,6 +113,11 @@ const Instructor = () => {
         toast.warning(res.message);
       }
     });
+  };
+
+  const handleChangeGender = (e) => {
+    formik.setFieldValue("gender", Number(e.target.value).valueOf());
+    //console.log(e.target.value);
   };
 
   return (
@@ -200,88 +206,98 @@ const Instructor = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Input
-            id="instructorid"
-            label="Instructor ID"
-            type="text"
-            required
-            autoComplete="off"
-            frmField={formik.getFieldProps("code")}
-            err={formik.touched.code && formik.errors.code}
-            errMessage={formik.errors.code}
-          />
-          <div className="row mb-3 d-flex align-items-center">
-            <label className="col-sm-3 col-form-label">
-              Full name <span className="text-danger">*</span>
-            </label>
-            <div className="col-sm">
-              <div className="row">
-                <div className="col-sm-6">
-                  <Inputs
-                    id="firstname"
-                    type="text"
-                    placeholder="First name"
-                    autoComplete="off"
-                    frmField={formik.getFieldProps("firstName")}
-                    err={formik.touched.firstName && formik.errors.firstName}
-                    errMessage={formik.errors.firstName}
-                  />
-                </div>
-                <div className="col-sm-6">
-                  <Inputs
-                    id="lastname"
-                    type="text"
-                    placeholder="Last name"
-                    autoComplete="off"
-                    frmField={formik.getFieldProps("lastName")}
-                    err={formik.touched.lastName && formik.errors.lastName}
-                    errMessage={formik.errors.lastName}
-                  />
+          <form>
+            <Input
+              id="instructorid"
+              label="Instructor ID"
+              labelSize="4"
+              type="text"
+              required
+              autoComplete="off"
+              frmField={formik.getFieldProps("code")}
+              err={formik.touched.code && formik.errors.code}
+              errMessage={formik.errors.code}
+            />
+            <div className="row mb-3 d-flex align-items-center">
+              <label className="col-sm-4 col-form-label">
+                Full name <span className="text-danger">*</span>
+              </label>
+              <div className="col-sm">
+                <div className="row">
+                  <div className="col-sm-6">
+                    <Inputs
+                      id="firstname"
+                      type="text"
+                      placeholder="First name"
+                      autoComplete="off"
+                      frmField={formik.getFieldProps("firstName")}
+                      err={formik.touched.firstName && formik.errors.firstName}
+                      errMessage={formik.errors.firstName}
+                    />
+                  </div>
+                  <div className="col-sm-6">
+                    <Inputs
+                      id="lastname"
+                      type="text"
+                      placeholder="Last name"
+                      autoComplete="off"
+                      frmField={formik.getFieldProps("lastName")}
+                      err={formik.touched.lastName && formik.errors.lastName}
+                      errMessage={formik.errors.lastName}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row mb-3 d-flex align-items-center">
-            <label className="col-sm-3 col-form-label">
-              Gender <span className="text-danger">*</span>
-            </label>
-            <div className="col-sm">
-              <Checkbox
-                type="radio"
-                id="male"
-                label="Male"
-                defaultChecked
-                frmField={formik.getFieldProps("gender")}
-              />
-              <Checkbox
-                type="radio"
-                id="female"
-                label="Female"
-                frmField={formik.getFieldProps("gender")}
-              />
+            <div className="row mb-3 d-flex align-items-center">
+              <label className="col-sm-4 col-form-label">
+                Gender <span className="text-danger">*</span>
+              </label>
+              <div className="col-sm">
+                <Checkbox
+                  type="radio"
+                  id="male"
+                  label="Male"
+                  defaultChecked={formik.values.gender === 0 ? true : ""}
+                  onClick={handleChangeGender}
+                  defaultValue={0}
+                  name="gender"
+                />
+                <Checkbox
+                  type="radio"
+                  id="female"
+                  label="Female"
+                  defaultChecked={formik.values.gender === 1 ? true : ""}
+                  defaultValue={1}
+                  onClick={handleChangeGender}
+                  name="gender"
+                />
+              </div>
             </div>
-          </div>
-          <Input
-            id="phone"
-            label="Phone"
-            type="text"
-            required
-            placeholder="Phone number"
-            autoComplete="off"
-            frmField={formik.getFieldProps("phone")}
-            err={formik.touched.phone && formik.errors.phone}
-            errMessage={formik.errors.phone}
-          />
-          <Input
-            id="email"
-            label="Email"
-            type="text"
-            placeholder="Email address"
-            autoComplete="off"
-            frmField={formik.getFieldProps("email")}
-            err={formik.touched.email && formik.errors.email}
-            errMessage={formik.errors.email}
-          />
+            <Input
+              id="phone"
+              label="Phone"
+              type="text"
+              labelSize="4"
+              required
+              placeholder="Phone number"
+              autoComplete="off"
+              frmField={formik.getFieldProps("phone")}
+              err={formik.touched.phone && formik.errors.phone}
+              errMessage={formik.errors.phone}
+            />
+            <Input
+              id="email"
+              label="Email"
+              labelSize="4"
+              type="text"
+              placeholder="Email address"
+              autoComplete="off"
+              frmField={formik.getFieldProps("email")}
+              err={formik.touched.email && formik.errors.email}
+              errMessage={formik.errors.email}
+            />
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

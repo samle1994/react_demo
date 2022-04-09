@@ -1,7 +1,7 @@
 import React from "react";
 
 const Checkbox = (props) => {
-  const { type, id, label, frmField, err, errMessage, ...others } = props;
+  const { type, id, label, err, ...others } = props;
 
   return (
     <>
@@ -12,13 +12,11 @@ const Checkbox = (props) => {
           id={id}
           label={label}
           {...others}
-          {...frmField}
         />
         <label className="form-check-label" htmlFor={id}>
           {label}
         </label>
       </div>
-      {err ? <div className="invalid-feedback">{errMessage}</div> : ""}
     </>
   );
 };

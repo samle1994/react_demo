@@ -24,7 +24,6 @@ function Major() {
   }, []);
 
   const [show, setshowModal] = useState(false);
-
   const handleShow = () => setshowModal(true);
   const handleClose = () => setshowModal(false);
 
@@ -129,14 +128,16 @@ function Major() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Input
-            id="txtMajor"
-            label="Major Name"
-            type="text"
-            frmField={formik.getFieldProps("name")}
-            err={formik.touched.name && formik.errors.name}
-            errMessage={formik.errors.name}
-          />
+          <form>
+            <Input
+              id="txtMajor"
+              label="Major Name"
+              type="text"
+              frmField={formik.getFieldProps("name")}
+              err={formik.touched.name && formik.errors.name}
+              errMessage={formik.errors.name}
+            />
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
