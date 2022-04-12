@@ -14,7 +14,7 @@ const Instructor = () => {
 
   const loadData = () => {
     studentService.list().then((res) => {
-      //console.log(res.data);
+      console.log(res.data);
       setstudents(res.data);
     });
   };
@@ -170,7 +170,7 @@ const Instructor = () => {
                     <th>Gender</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th>Major ID</th>
+                    <th>Major Name</th>
                     <th style={{ width: "80px" }}></th>
                   </tr>
                 </thead>
