@@ -331,7 +331,7 @@ const Instructor = () => {
                       ? "is-invalid"
                       : ""
                   }
-                  value="11"
+                  value={formik.values.majorId}
                 >
                   <option key="0">Select Major</option>
                   {majors.map((major, index) => (
