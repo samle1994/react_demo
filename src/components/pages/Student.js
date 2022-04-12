@@ -170,6 +170,7 @@ const Instructor = () => {
                     <th>Gender</th>
                     <th>Phone</th>
                     <th>Email</th>
+                    <th>Major ID</th>
                     <th style={{ width: "80px" }}></th>
                   </tr>
                 </thead>
@@ -188,6 +189,7 @@ const Instructor = () => {
                       </td>
                       <td>{student.phone}</td>
                       <td>{student.email}</td>
+                      <td></td>
                       <td>
                         <a
                           href="/"
@@ -275,7 +277,7 @@ const Instructor = () => {
                   type="radio"
                   id="male"
                   label="Male"
-                  defaultChecked
+                  defaultChecked={formik.values.gender === 0 ? true : ""}
                   onClick={handleChangeGender}
                   defaultValue={0}
                   name="gender"
@@ -284,6 +286,7 @@ const Instructor = () => {
                   type="radio"
                   id="female"
                   label="Female"
+                  defaultChecked={formik.values.gender === 1 ? true : ""}
                   defaultValue={1}
                   onClick={handleChangeGender}
                   name="gender"
@@ -323,7 +326,12 @@ const Instructor = () => {
                   id="majorId"
                   aria-label="Select Major"
                   onChange={handleChangeSelect}
-                  className={formik.errors.majorId ? "is-invalid" : ""}
+                  className={
+                    formik.touched.majorId && formik.errors.majorId
+                      ? "is-invalid"
+                      : ""
+                  }
+                  value="11"
                 >
                   <option key="0">Select Major</option>
                   {majors.map((major, index) => (
