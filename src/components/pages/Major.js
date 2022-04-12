@@ -80,11 +80,14 @@ function Major() {
       handleFormSubmit(values);
     },
   });
+  const [isloading, setisloading] = useState(false);
 
   const handleFormSubmit = (data) => {
-    console.log(data);
+    setisloading(true);
+    //console.log(data);
     if (data.id === 0) {
       majorService.add(data).then((res) => {
+        setisloading(false);
         if (res.errorCode === 0) {
           loadData();
           handleClose();
@@ -93,6 +96,7 @@ function Major() {
       });
     } else {
       majorService.update(data.id, data).then((res) => {
+        setisloading(false);
         if (res.errorCode === 0) {
           loadData();
           handleClose();
@@ -145,7 +149,7 @@ function Major() {
           </Button>
           <Button
             variant="primary"
-            disabled={!formik.dirty || !formik.isValid}
+            disabled={!formik.dirty || !formik.isValid || isloading}
             onClick={formik.handleSubmit}
           >
             Save

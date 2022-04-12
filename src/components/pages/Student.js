@@ -326,11 +326,7 @@ const Instructor = () => {
                   id="majorId"
                   aria-label="Select Major"
                   onChange={handleChangeSelect}
-                  className={
-                    formik.touched.majorId && formik.errors.majorId
-                      ? "is-invalid"
-                      : ""
-                  }
+                  className={formik.errors.majorId ? "is-invalid" : ""}
                   value={formik.values.majorId}
                 >
                   <option key="0">Select Major</option>
