@@ -136,6 +136,7 @@ const Instructor = () => {
   };
   const handleChangeSelect = (e) => {
     formik.setFieldValue("majorId", Number(e.target.value).valueOf());
+    //formik.setTouched({ majorId: true });
   };
   return (
     <>
@@ -329,7 +330,7 @@ const Instructor = () => {
                   className={formik.errors.majorId ? "is-invalid" : ""}
                   value={formik.values.majorId}
                 >
-                  <option key="0">Select Major</option>
+                  <option key="1">Select Major</option>
                   {majors.map((major, index) => (
                     <option key={major.id} value={major.id}>
                       {major.name}

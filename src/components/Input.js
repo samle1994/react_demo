@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Validators from "./../helpers/propTypeValidators";
 
 const Input = (props) => {
   const {
@@ -54,7 +55,7 @@ Input.propTypes = {
   inputRef: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   label: PropTypes.string.isRequired,
-  labelSize: PropTypes.number,
+  labelSize: Validators.numberBetween(1, 12),
   required: PropTypes.bool,
   frmField: PropTypes.object,
   err: PropTypes.string,
