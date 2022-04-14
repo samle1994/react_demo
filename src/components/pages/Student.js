@@ -229,7 +229,7 @@ const Instructor = () => {
             <Input
               id="instructorid"
               label="Student ID"
-              labelSize="4"
+              labelSize={4}
               type="text"
               required
               autoComplete="off"
@@ -297,7 +297,7 @@ const Instructor = () => {
               id="phone"
               label="Phone"
               type="text"
-              labelSize="4"
+              labelSize={4}
               required
               placeholder="Phone number"
               autoComplete="off"
@@ -308,7 +308,7 @@ const Instructor = () => {
             <Input
               id="email"
               label="Email"
-              labelSize="4"
+              labelSize={4}
               type="text"
               placeholder="Email address"
               autoComplete="off"

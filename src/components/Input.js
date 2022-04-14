@@ -1,9 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Input = (props) => {
   const {
     inputRef,
     id,
+    type,
     label,
     labelSize,
     required,
@@ -34,6 +36,7 @@ const Input = (props) => {
             className={classInput}
             autoComplete="off"
             ref={inputRef}
+            type={type}
             id={id}
             label={label}
             {...others}
@@ -44,6 +47,18 @@ const Input = (props) => {
       </div>
     </div>
   );
+};
+
+Input.propTypes = {
+  type: PropTypes.oneOf(["text", "url", "email", "number", "password"]),
+  inputRef: PropTypes.object,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  label: PropTypes.string.isRequired,
+  labelSize: PropTypes.number,
+  required: PropTypes.bool,
+  frmField: PropTypes.object,
+  err: PropTypes.string,
+  errMessage: PropTypes.string,
 };
 
 export default Input;
