@@ -4,6 +4,7 @@ import DefaultLayout from "./components/containers/DefaultLayout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import LoadingBar from "react-redux-loading-bar";
+import "./i18n";
 function App() {
   return (
     <>

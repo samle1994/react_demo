@@ -5,9 +5,11 @@ import userService from "../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ActionTypes from "./../store/actions";
+import { useTranslation } from "react-i18next";
 
 //sfc
 const Login = (props) => {
+  const { t } = useTranslation();
   //usf
   const [message, setmessage] = useState("");
   const usernameRef = React.useRef();
@@ -36,7 +38,7 @@ const Login = (props) => {
         handleLoginAction(result.data.data.accessToken, result.data);
         navigate("/");
       } else {
-        setmessage(result.data.message);
+        setmessage(t(`message:${result.errorCode}`));
       }
     });
   };
@@ -52,7 +54,7 @@ const Login = (props) => {
           <div className="card bg-primary">
             <div className="card-header text-white">
               <h4 className="card-title mb-0">
-                <i className="bi-grid-3x3-gap-fill"></i> Login
+                <i className="bi-grid-3x3-gap-fill"></i> {t("signIn")}
               </h4>
             </div>
             <div className="card-body bg-white rounded-bottom">
@@ -61,19 +63,19 @@ const Login = (props) => {
                 <Input
                   inputRef={usernameRef}
                   id="inputEmail3"
-                  label="Username"
+                  label={t("username")}
                   type="text"
                 />
                 <Input
                   inputRef={passwordRef}
                   id="inputEmail4"
-                  label="Password"
+                  label={t("password")}
                   type="password"
                 />
                 <div className="row">
                   <div className="offset-sm-3 col-auto">
                     <button type="submit" className="btn btn-primary">
-                      Sign in
+                      {t("signIn")}
                     </button>
                   </div>
                 </div>
