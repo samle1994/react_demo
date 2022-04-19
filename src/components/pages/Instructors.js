@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Checkbox from "./../Checkbox";
 import Inputs from "./Inputs";
+import { t } from "i18next";
 const Instructor = () => {
   const [instructors, setinstructors] = useState([]);
 
@@ -127,9 +128,7 @@ const Instructor = () => {
           <div className="card-header">
             <div className="row">
               <div className="col">
-                <h3 className="card-title">
-                  Instructor <small className="text-muted">list</small>
-                </h3>
+                <h3 className="card-title">{t("instructorslist")}</h3>
               </div>
               <div className="col-auto">
                 <button
@@ -137,7 +136,7 @@ const Instructor = () => {
                   className="btn btn-primary"
                   onClick={showModalHandler}
                 >
-                  <i className="bi-plus-lg"></i> Add
+                  <i className="bi-plus-lg"></i> {t("add")}
                 </button>
               </div>
             </div>
@@ -148,11 +147,11 @@ const Instructor = () => {
                 <thead>
                   <tr className="table-primary border-primary">
                     <th style={{ width: "50px" }}>STT</th>
-                    <th>Instructor Id</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Phone</th>
-                    <th>Email</th>
+                    <th>{t("instructors")} Id</th>
+                    <th>{t("fullname")}</th>
+                    <th>{t("gender")}</th>
+                    <th>{t("phone")}</th>
+                    <th>{t("email")}</th>
                     <th style={{ width: "80px" }}></th>
                   </tr>
                 </thead>
@@ -202,7 +201,7 @@ const Instructor = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {formik.values.id === 0 ? "News" : "Edit"} Instructor
+            {formik.values.id === 0 ? t("news") : t("edit")} {t("instructors")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -220,7 +219,7 @@ const Instructor = () => {
             />
             <div className="row mb-3 d-flex align-items-center">
               <label className="col-sm-4 col-form-label">
-                Full name <span className="text-danger">*</span>
+                {t("fullname")} <span className="text-danger">*</span>
               </label>
               <div className="col-sm">
                 <div className="row">
@@ -228,7 +227,7 @@ const Instructor = () => {
                     <Inputs
                       id="firstname"
                       type="text"
-                      placeholder="First name"
+                      placeholder={t("firstname")}
                       autoComplete="off"
                       frmField={formik.getFieldProps("firstName")}
                       err={formik.touched.firstName && formik.errors.firstName}
@@ -239,7 +238,7 @@ const Instructor = () => {
                     <Inputs
                       id="lastname"
                       type="text"
-                      placeholder="Last name"
+                      placeholder={t("lastname")}
                       autoComplete="off"
                       frmField={formik.getFieldProps("lastName")}
                       err={formik.touched.lastName && formik.errors.lastName}
@@ -251,13 +250,13 @@ const Instructor = () => {
             </div>
             <div className="row mb-3 d-flex align-items-center">
               <label className="col-sm-4 col-form-label">
-                Gender <span className="text-danger">*</span>
+                {t("gender")} <span className="text-danger">*</span>
               </label>
               <div className="col-sm">
                 <Checkbox
                   type="radio"
                   id="male"
-                  label="Male"
+                  label={t("male")}
                   defaultChecked={formik.values.gender === 0 ? true : ""}
                   onClick={handleChangeGender}
                   defaultValue={0}
@@ -266,7 +265,7 @@ const Instructor = () => {
                 <Checkbox
                   type="radio"
                   id="female"
-                  label="Female"
+                  label={t("female")}
                   defaultChecked={formik.values.gender === 1 ? true : ""}
                   defaultValue={1}
                   onClick={handleChangeGender}
@@ -276,11 +275,11 @@ const Instructor = () => {
             </div>
             <Input
               id="phone"
-              label="Phone"
+              label={t("phone")}
               type="text"
               labelSize={4}
               required
-              placeholder="Phone number"
+              placeholder={t("phonenumber")}
               autoComplete="off"
               frmField={formik.getFieldProps("phone")}
               err={formik.touched.phone && formik.errors.phone}
@@ -291,7 +290,7 @@ const Instructor = () => {
               label="Email"
               labelSize={4}
               type="text"
-              placeholder="Email address"
+              placeholder="Email"
               autoComplete="off"
               frmField={formik.getFieldProps("email")}
               err={formik.touched.email && formik.errors.email}

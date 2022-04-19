@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "./../Input";
+import { useTranslation } from "react-i18next";
 function Major() {
   const navigate = useNavigate();
 
@@ -117,7 +118,7 @@ function Major() {
       handleShow();
     }
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <Modal
@@ -128,14 +129,14 @@ function Major() {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {formik.values.id === 0 ? "News" : "Edit"} Major
+            {formik.values.id === 0 ? t("news") : t("edit")} {t("major")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
             <Input
               id="txtMajor"
-              label="Major Name"
+              label={t("majorname")}
               type="text"
               frmField={formik.getFieldProps("name")}
               err={formik.touched.name && formik.errors.name}
@@ -162,9 +163,7 @@ function Major() {
           <div className="card-header">
             <div className="row">
               <div className="col">
-                <h3 className="card-title">
-                  Major <small className="text-muted">list</small>
-                </h3>
+                <h3 className="card-title">{t("majorlist")}</h3>
               </div>
               <div className="col-auto">
                 <button
@@ -173,7 +172,7 @@ function Major() {
                   variant="primary"
                   onClick={(e) => showModalHandler(e, 0)}
                 >
-                  <i className="bi-plus-lg"></i> Add
+                  <i className="bi-plus-lg"></i> {t("add")}
                 </button>
               </div>
             </div>
@@ -184,7 +183,7 @@ function Major() {
                 <thead>
                   <tr className="table-primary border-primary">
                     <th style={{ width: "50px" }}>#</th>
-                    <th>Major Name</th>
+                    <th>{t("majorname")}</th>
                     <th style={{ width: "80px" }}></th>
                   </tr>
                 </thead>
