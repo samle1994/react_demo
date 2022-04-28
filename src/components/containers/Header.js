@@ -50,24 +50,24 @@ const Header = () => {
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to="/major">
-                  Major
+                  {t("major")}
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/instructors">
-                  Instructors
+                  {t("instructors")}
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/student">
-                  Student
+                  {t("student")}
                 </NavLink>
               </li>
             </ul>
             <ul className="navbar-nav">
               <li className="nav-item">
                 <NavLink className="nav-link" to="/">
-                  Welcome to {userInfo.data.fullName}
+                  {t("welcometo")} {userInfo.data.fullName}
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -77,7 +77,7 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <a onClick={changeLanguage} className="nav-link" href="/">
-                  <i className={`flag-icon flag-icon-${flag}`}></i>
+                  <i className={`flag-icon flag-icon-${flag} fs-4`}></i>
                 </a>
               </li>
             </ul>

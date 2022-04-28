@@ -9,6 +9,7 @@ import Checkbox from "./../Checkbox";
 import Inputs from "./Inputs";
 import Major from "./Major";
 import majorService from "./../../services/majorService";
+import { useTranslation } from "react-i18next";
 const Instructor = () => {
   const [students, setstudents] = useState([]);
 
@@ -138,6 +139,7 @@ const Instructor = () => {
     formik.setFieldValue("majorId", Number(e.target.value).valueOf());
     //formik.setTouched({ majorId: true });
   };
+  const { t } = useTranslation();
   return (
     <>
       <div className="container mt-4">
@@ -145,9 +147,7 @@ const Instructor = () => {
           <div className="card-header">
             <div className="row">
               <div className="col">
-                <h3 className="card-title">
-                  Studens <small className="text-muted">list</small>
-                </h3>
+                <h3 className="card-title">{t("student")}</h3>
               </div>
               <div className="col-auto">
                 <button
@@ -155,7 +155,7 @@ const Instructor = () => {
                   className="btn btn-primary"
                   onClick={showModalHandler}
                 >
-                  <i className="bi-plus-lg"></i> Add
+                  <i className="bi-plus-lg"></i> {t("add")}
                 </button>
               </div>
             </div>
@@ -166,12 +166,12 @@ const Instructor = () => {
                 <thead>
                   <tr className="table-primary border-primary">
                     <th style={{ width: "50px" }}>STT</th>
-                    <th>Instructor Id</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Major Name</th>
+                    <th>{t("student")} Id</th>
+                    <th>{t("fullname")}</th>
+                    <th>{t("gender")}</th>
+                    <th>{t("phone")}</th>
+                    <th>{t("email")}</th>
+
                     <th style={{ width: "80px" }}></th>
                   </tr>
                 </thead>
@@ -190,7 +190,7 @@ const Instructor = () => {
                       </td>
                       <td>{student.phone}</td>
                       <td>{student.email}</td>
-                      <td></td>
+
                       <td>
                         <a
                           href="/"
@@ -222,14 +222,14 @@ const Instructor = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {formik.values.id === 0 ? "News" : "Edit"} Studens
+            {formik.values.id === 0 ? t("news") : t("edit")} {t("student")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
             <Input
               id="instructorid"
-              label="Student ID"
+              label={t("studentID")}
               labelSize={4}
               type="text"
               required
@@ -240,7 +240,7 @@ const Instructor = () => {
             />
             <div className="row mb-3 d-flex align-items-center">
               <label className="col-sm-4 col-form-label">
-                Full name <span className="text-danger">*</span>
+                {t("fullname")} <span className="text-danger">*</span>
               </label>
               <div className="col-sm">
                 <div className="row">
@@ -248,7 +248,7 @@ const Instructor = () => {
                     <Inputs
                       id="firstname"
                       type="text"
-                      placeholder="First name"
+                      placeholder={t("firstname")}
                       autoComplete="off"
                       frmField={formik.getFieldProps("firstName")}
                       err={formik.touched.firstName && formik.errors.firstName}
@@ -259,7 +259,7 @@ const Instructor = () => {
                     <Inputs
                       id="lastname"
                       type="text"
-                      placeholder="Last name"
+                      placeholder={t("lastname")}
                       autoComplete="off"
                       frmField={formik.getFieldProps("lastName")}
                       err={formik.touched.lastName && formik.errors.lastName}
@@ -277,7 +277,7 @@ const Instructor = () => {
                 <Checkbox
                   type="radio"
                   id="male"
-                  label="Male"
+                  label={t("male")}
                   defaultChecked={formik.values.gender === 0 ? true : ""}
                   onClick={handleChangeGender}
                   defaultValue={0}
@@ -286,7 +286,7 @@ const Instructor = () => {
                 <Checkbox
                   type="radio"
                   id="female"
-                  label="Female"
+                  label={t("female")}
                   defaultChecked={formik.values.gender === 1 ? true : ""}
                   defaultValue={1}
                   onClick={handleChangeGender}
@@ -300,7 +300,7 @@ const Instructor = () => {
               type="text"
               labelSize={4}
               required
-              placeholder="Phone number"
+              placeholder={t("phonenumber")}
               autoComplete="off"
               frmField={formik.getFieldProps("phone")}
               err={formik.touched.phone && formik.errors.phone}
@@ -311,7 +311,7 @@ const Instructor = () => {
               label="Email"
               labelSize={4}
               type="text"
-              placeholder="Email address"
+              placeholder={t("email")}
               autoComplete="off"
               frmField={formik.getFieldProps("email")}
               err={formik.touched.email && formik.errors.email}
@@ -319,7 +319,7 @@ const Instructor = () => {
             />
             <div className="row mb-3 d-flex align-items-center">
               <label htmlFor="majorId" className="col-sm-4 col-form-label">
-                Major ID <span className="text-danger">*</span>
+                {t("majorID")} <span className="text-danger">*</span>
               </label>
               <div className="col-sm">
                 <Form.Select
@@ -330,7 +330,7 @@ const Instructor = () => {
                   className={formik.errors.majorId ? "is-invalid" : ""}
                   value={formik.values.majorId}
                 >
-                  <option key="1">Select Major</option>
+                  <option key="1">{t("selectmajor")}</option>
                   {majors.map((major, index) => (
                     <option key={major.id} value={major.id}>
                       {major.name}
