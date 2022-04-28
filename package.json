@@ -1,5 +1,6 @@
 {
   "name": "react_demo",
+  "homepage": "http://react.lesam.store",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
